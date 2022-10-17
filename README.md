@@ -1,3 +1,4 @@
+<!--
 # Homework 1 ADL NTU by p08922002
 
 ## Environment
@@ -84,3 +85,4 @@ preprocess_slot.py --data_dir ./data/intent/ --glove_path ./glove.840B.300d.txt 
 ```shell
 python train_slot.py --comment GRU --hidden-size 768 --num_layers 1 --num_epoch 200 --max_len 40 --lr 0.1
 ```
+-->
