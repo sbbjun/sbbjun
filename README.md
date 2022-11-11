@@ -58,7 +58,7 @@ run_swag_no_trainer.py -h
 ```
 - generate final model by run_swag_no_trainer.py
 ```shell
-accelerate launch run_swag_no_trainer.py \
+run_swag_no_trainer.py \
   --model_name_or_path bert-base-chinese \
   --train_file swag_train.json \
   --validation_file swag_valid.json \
@@ -72,7 +72,7 @@ accelerate launch run_swag_no_trainer.py \
 ```
 ### Predict
 ```shell
-accelerate launch run_swag_no_trainer.py \
+run_swag_no_trainer.py \
   --model_name_or_path model_choice \
   --test_file swag_test.json \
   --output_dir predict \
@@ -103,7 +103,7 @@ run_squad_no_trainer.py -h
 ```
 - generate final model by run_squad_no_trainer.py
 ```shell
-accelerate launch run_qa_no_trainer.py \
+run_qa_no_trainer.py \
   --model_name_or_path ckiplab/albert-base-chinese \
   --train_file squad_train.json \
   --validation_file squad_valid.json \
@@ -117,7 +117,7 @@ accelerate launch run_qa_no_trainer.py \
 ```
 ### Predict
 ```shell
-accelerate launch run_qa_no_trainer.py \
+run_qa_no_trainer.py \
   --model_name_or_path model_squad_albert \
   --test_file squad_test.json \
   --do_predict \
@@ -125,4 +125,5 @@ accelerate launch run_qa_no_trainer.py \
   --max_seq_length 512
 ```
 - output: \[output-dir\]/predict_squad.csv
+  
   
