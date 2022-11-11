@@ -43,7 +43,7 @@ torch evaluate datasets sentencepiece accelerate protobuf
 ```
 convert_swag.py [context-input.json] [qa-input.json]
 
-output: swag_[qa-input.json]
+output: [qa-input.json].swag.json
 ``` 
 - preprocessing commands
 ```shell
@@ -74,7 +74,7 @@ run_swag_no_trainer.py \
 ```shell
 run_swag_no_trainer.py \
   --model_name_or_path model_choice \
-  --test_file swag_test.json \
+  --test_file test.json.swag.json \
   --output_dir predict \
   --max_length 512
 ```
@@ -88,7 +88,7 @@ run_swag_no_trainer.py \
 ```
 convert_squad.py [context-input.json] [qa-input.json] ([predict-from-part-1.json])
 
-output: squad_[qa-input.json]
+output: [qa-input.json].squad.json
 ```
 - preprocessing commands
 ```
@@ -119,7 +119,7 @@ run_qa_no_trainer.py \
 ```shell
 run_qa_no_trainer.py \
   --model_name_or_path model_squad_albert \
-  --test_file squad_test.json \
+  --test_file test.json.squad.json \
   --do_predict \
   --output_dir predict \
   --max_seq_length 512
