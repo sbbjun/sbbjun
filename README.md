@@ -58,11 +58,13 @@ run_swag_no_trainer.py -h
 ```
 - generate final model by run_swag_no_trainer.py
 ```shell
-accelerate launch run_swag_no_trainer.py --model_name_or_path bert-base-chinese --train_file swag_train.json --validation_file swag_valid.json --output_dir model_choice --max_length 512 --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps 2 --num_train_epochs 1 --learning_rate 3e-5
+accelerate launch run_swag_no_trainer.py -- \
+  -- bert-base-chinese --train_file swag_train.json --validation_file swag_valid.json --output_dir model_choice --max_length 512 --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps 2 --num_train_epochs 1 --learning_rate 3e-5
 ```
 ### Predict
 ```shell
-accelerate launch run_swag_no_trainer.py --model_name_or_path model_choice --test_file swag_test.json --output_dir predict --max_length 512
+accelerate launch run_swag_no_trainer.py -- \
+  -- model_choice --test_file swag_test.json --output_dir predict --max_length 512
 ```
 - output: \[output-dir\]/predict_swag.json
 
@@ -89,10 +91,12 @@ run_squad_no_trainer.py -h
 ```
 - generate final model by run_squad_no_trainer.py
 ```shell
-accelerate launch run_qa_no_trainer.py --model_name_or_path ckiplab/albert-base-chinese --train_file squad_train.json --validation_file squad_valid.json --output_dir model_squad_albert --max_seq_length 512 --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps 2 --num_train_epochs 3 --learning_rate 3e-5
+accelerate launch run_qa_no_trainer.py -- \
+  -- ckiplab/albert-base-chinese --train_file squad_train.json --validation_file squad_valid.json --output_dir model_squad_albert --max_seq_length 512 --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps 2 --num_train_epochs 3 --learning_rate 3e-5
 ```
 ### Predict
 ```shell
-accelerate launch run_qa_no_trainer.py --model_name_or_path model_squad_albert --test_file squad_test.json --do_predict --output_dir predict --max_seq_length 512
+accelerate launch run_qa_no_trainer.py -- \
+  -- model_squad_albert --test_file squad_test.json --do_predict --output_dir predict --max_seq_length 512
 ```
 - output: \[output-dir\]/predict_squad.csv
