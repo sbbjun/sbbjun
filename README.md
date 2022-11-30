@@ -34,11 +34,8 @@ pip install -e tw_rouge
 
 
 ## Training
-### Usage
+### Code
 - hw3.py
-```
-usage
-``` 
 
 ### Model Architecture
 - Architecture: MT5ForConditionalGeneration
