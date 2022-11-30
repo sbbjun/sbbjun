@@ -40,17 +40,17 @@ pip install -e tw_rouge
 usage
 ``` 
 
-### Model config
-- Model
--- Architecture: MT5ForConditionalGeneration
--- Tokenizer: MT5Tokenizer
--- Optimizer: Adafactor
-- Configuration
--- learning-rate: 3e-4
--- max-len: 256
--- max-len-target: 64
--- batch-size: 3
--- gradient accumulation: 4
+### Model Architecture
+- Architecture: MT5ForConditionalGeneration
+- Tokenizer: MT5Tokenizer
+- Optimizer: Adafactor
+
+### Model Configuration
+- learning-rate: 3e-4
+- max-len: 256
+- max-len-target: 64
+- batch-size: 3
+- gradient accumulation: 4
 ```
 {
   "_name_or_path": "google/mt5-small",
@@ -114,11 +114,13 @@ options:
 ```
 
 ### Configuration
-- Configuration
--- max-len-target: 64
--- epoch: 50
+- max-len-target: 64
+- epoch: 50
 
-### Generate strategies
+### Generate Strategies (final)
+- hw3_predict.py -b 128 --do_sample --temperature 0.25 --top_p 0.64 --top_k 0 
+
+### Generate Strategies (optional)
 - hw3_predict.py -b 128 
 - hw3_predict.py -b 128 -gng 2 
 - hw3_predict.py -b 32 --num_beams 4 -ges 
