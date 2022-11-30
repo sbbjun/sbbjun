@@ -34,42 +34,23 @@ pip install -e tw_rouge
 
 
 ## Training
-### Program usage
+### Usage
 - hw3.py
 ```
 usage
 ``` 
 
-
-## Predict (generate summary)
-- hw3_predict.py
-```
-usage: hw3_predict.py [-h] -m MODEL_PATH [-M MODEL_TOKEN_PATH] -j JSONL [-J JSONL_OUT] [-l MAX_LEN] [-L MAX_LEN_TARGET] [-b BATCH_SIZE_PREDICT] [-gs]
-                      [-ges] [-gng NO_REPEAT_NGRAM_SIZE] [-gnb NUM_BEAMS] [-gt TEMPERATURE] [-gtk TOP_K] [-gtp TOP_P]
-
-options:
-  -h, --help            show this help message and exit
-  -m MODEL_PATH, --model-path MODEL_PATH
-                        help
-  -M MODEL_TOKEN_PATH, --model-token-path MODEL_TOKEN_PATH
-  -j JSONL, --jsonl JSONL
-  -J JSONL_OUT, --jsonl-out JSONL_OUT
-  -l MAX_LEN, --max-len MAX_LEN
-  -L MAX_LEN_TARGET, --max-len-target MAX_LEN_TARGET
-  -b BATCH_SIZE_PREDICT, --batch-size-predict BATCH_SIZE_PREDICT
-  -gs, --do_sample
-  -ges, --early_stopping
-  -gng NO_REPEAT_NGRAM_SIZE, --no_repeat_ngram_size NO_REPEAT_NGRAM_SIZE
-  -gnb NUM_BEAMS, --num_beams NUM_BEAMS
-  -gt TEMPERATURE, --temperature TEMPERATURE
-  -gtk TOP_K, --top_k TOP_K
-  -gtp TOP_P, --top_p TOP_P
-```
-
 ### Model config
-- configuration
+- Model
 -- Architecture: MT5ForConditionalGeneration
 -- Tokenizer: MT5Tokenizer
+-- Optimizer: Adafactor
+- Configuration
+-- learning-rate: 3e-4
+-- max-len: 256
+-- max-len-target: 64
+-- batch-size: 3
+-- gradient accumulation: 4
 ```
 {
   "_name_or_path": "google/mt5-small",
@@ -104,7 +85,58 @@ options:
 }
 ```
 
+
+
+## Predict (generate summary)
+### Usage
+- hw3_predict.py
+```
+usage: hw3_predict.py [-h] -m MODEL_PATH [-M MODEL_TOKEN_PATH] -j JSONL [-J JSONL_OUT] [-l MAX_LEN] [-L MAX_LEN_TARGET] [-b BATCH_SIZE_PREDICT] [-gs]
+                      [-ges] [-gng NO_REPEAT_NGRAM_SIZE] [-gnb NUM_BEAMS] [-gt TEMPERATURE] [-gtk TOP_K] [-gtp TOP_P]
+
+options:
+  -h, --help            show this help message and exit
+  -m MODEL_PATH, --model-path MODEL_PATH
+                        help
+  -M MODEL_TOKEN_PATH, --model-token-path MODEL_TOKEN_PATH
+  -j JSONL, --jsonl JSONL
+  -J JSONL_OUT, --jsonl-out JSONL_OUT
+  -l MAX_LEN, --max-len MAX_LEN
+  -L MAX_LEN_TARGET, --max-len-target MAX_LEN_TARGET
+  -b BATCH_SIZE_PREDICT, --batch-size-predict BATCH_SIZE_PREDICT
+  -gs, --do_sample
+  -ges, --early_stopping
+  -gng NO_REPEAT_NGRAM_SIZE, --no_repeat_ngram_size NO_REPEAT_NGRAM_SIZE
+  -gnb NUM_BEAMS, --num_beams NUM_BEAMS
+  -gt TEMPERATURE, --temperature TEMPERATURE
+  -gtk TOP_K, --top_k TOP_K
+  -gtp TOP_P, --top_p TOP_P
+```
+
+### Configuration
+- Configuration
+-- max-len-target: 64
+-- epoch: 50
+
+### Generate strategies
+- hw3_predict.py -b 128 
+- hw3_predict.py -b 128 -gng 2 
+- hw3_predict.py -b 32 --num_beams 4 -ges 
+- hw3_predict.py -b 16 --num_beams 8 -ges 
+- hw3_predict.py -b 128 --do_sample --top_k 16 
+- hw3_predict.py -b 128 --do_sample --top_k 32 
+- hw3_predict.py -b 128 --do_sample --top_k 64 
+- hw3_predict.py -b 128 --do_sample --top_k 128 
+- hw3_predict.py -b 128 --do_sample --top_p 0.92 --top_k 0 
+- hw3_predict.py -b 128 --do_sample --top_p 0.8 --top_k 0 
+- hw3_predict.py -b 128 --do_sample --top_p 0.64 --top_k 0 
+- hw3_predict.py -b 128 -gng 2 --do_sample --top_p 0.64 --top_k 0 
+- hw3_predict.py -b 128 --do_sample --temperature 0.75 --top_p 0.64 --top_k 0 
+- hw3_predict.py -b 128 --do_sample --temperature 0.25 --top_p 0.64 --top_k 0 
+
+
 ## Evaluate
+### Usage
 - eval.py
 ```
 usage: eval.py [-h] [-r REFERENCE] [-s SUBMISSION]
@@ -114,29 +146,5 @@ options:
   -s SUBMISSION, --submission SUBMISSION  
 ```
 
-## - generate final model by run_squad_no_trainer.py
-```shell
-run_qa_no_trainer.py \
-  --model_name_or_path ckiplab/albert-base-chinese \
-  --train_file squad_train.json \
-  --validation_file squad_valid.json \
-  --output_dir model_squad_albert \
-  --max_seq_length 512 \
-  --per_device_train_batch_size 1 \
-  --per_device_eval_batch_size 1 \
-  --gradient_accumulation_steps 2 \
-  --num_train_epochs 3 \
-  --learning_rate 3e-5
-```
-### Predict
-```shell
-run_qa_no_trainer.py \
-  --model_name_or_path model_squad_albert \
-  --test_file test.json.squad.json \
-  --do_predict \
-  --output_dir predict \
-  --max_seq_length 512
-```
-- output: \[output-dir\]/predict_squad.csv
-  
-  
+
+
